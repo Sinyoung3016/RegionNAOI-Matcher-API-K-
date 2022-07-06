@@ -12,44 +12,54 @@ import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeTypeOf
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.verify
 
 class RegionControllerTest : BehaviorSpec({
 
-    val regionService = mockk<RegionService>()
-    every {
-        regionService.createNewRegion(any())
-    } returns aoiReturnDto
-    every {
-        regionService.hasRegionId(1L)
-    } returns true
-    every {
-        regionService.hasRegionId(2L)
-    } returns true
-    every {
-        regionService.hasRegionId(100L)
-    } returns false
-    every {
-        regionService.readAllAOIInThisRegion(1L)
-    } returns listOfAOIReturnDto
-    every {
-        regionService.readAllAOIInThisRegion(2L)
-    } returns listOf()
-
-    val regionController = RegionController(regionService)
-
     given("postRegion") {
+        val regionService = mockk<RegionService>()
+        every {
+            regionService.createNewRegion(any())
+        } returns aoiReturnDto
+        val regionController = RegionController(regionService)
+
         `when`("If you request to Save new Region") {
             val result = regionController.postRegion(areaSaveRequest)
             then("you can get new Region's id") {
                 result.body!!.id shouldBe 0L
             }
             then("with 200 Status") {
-                result.statusCode.is2xxSuccessful
+                result.statusCode.is2xxSuccessful shouldBe true
+            }
+            then("verify") {
+                verify(exactly = 1) { regionService.createNewRegion(any()) }
             }
         }
     }
 
     given("getAOIListInThisRegion") {
+        val regionIdWithAOIS = 1L
+        val regionIdWithNoAOI = 2L
+        val regionIdNotInDB = 100L
+
+        val regionService = mockk<RegionService>()
+        every {
+            regionService.hasRegionId(regionIdWithAOIS)
+        } returns true
+        every {
+            regionService.hasRegionId(regionIdWithNoAOI)
+        } returns true
+        every {
+            regionService.hasRegionId(regionIdNotInDB)
+        } returns false
+        every {
+            regionService.readAllAOIInThisRegion(regionIdWithAOIS)
+        } returns listOfAOIReturnDto
+        every {
+            regionService.readAllAOIInThisRegion(regionIdWithNoAOI)
+        } returns listOf()
+        val regionController = RegionController(regionService)
+
         `when`("If We have Region 1 and this region contains list of AOI") {
             val result = regionController.getAOIListInThisRegion("1")
             then("you will get 3 AOIs") {
@@ -61,6 +71,13 @@ class RegionControllerTest : BehaviorSpec({
             then("with 200 Status") {
                 result.statusCode.is2xxSuccessful
             }
+            then("data check") {
+                result.body!!.aois[0].name shouldBe areaSaveRequest.name
+            }
+            then("verify") {
+                verify(exactly = 1) { regionService.hasRegionId(regionIdWithAOIS) }
+                verify(exactly = 1) { regionService.readAllAOIInThisRegion(regionIdWithAOIS) }
+            }
         }
         `when`("If We have Region 1 but this region contains nothing") {
             val result = regionController.getAOIListInThisRegion("2")
@@ -71,7 +88,11 @@ class RegionControllerTest : BehaviorSpec({
                 result.body.shouldBeTypeOf<AreaListReturnResponse>()
             }
             then("with 200 Status") {
-                result.statusCode.is2xxSuccessful
+                result.statusCode.is2xxSuccessful.shouldBeTrue()
+            }
+            then("verify") {
+                verify(exactly = 1) { regionService.hasRegionId(regionIdWithNoAOI) }
+                verify(exactly = 1) { regionService.readAllAOIInThisRegion(regionIdWithNoAOI) }
             }
         }
         `when`("If We do not have Region 100") {
@@ -79,7 +100,10 @@ class RegionControllerTest : BehaviorSpec({
                 regionController.getAOIListInThisRegion("100")
             }
             then("Hello Exception!") {
-               exception.message shouldBe "존재하지 않는 ID 입니다"
+                exception.message shouldBe "존재하지 않는 ID 입니다"
+            }
+            then("verify") {
+                verify(exactly = 1) { regionService.hasRegionId(regionIdNotInDB) }
             }
         }
     }
