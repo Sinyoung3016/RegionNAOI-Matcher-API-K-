@@ -3,10 +3,12 @@ package com.sia.matcher_kotlin_api.service
 import com.sia.matcher_kotlin_api.AreaForTest
 import com.sia.matcher_kotlin_api.respository.AOIRepository
 import com.sia.matcher_kotlin_api.respository.RegionRepository
+import com.sia.matcher_kotlin_api.service.dto.AreaReturnDto
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.booleans.shouldBeFalse
 import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.types.shouldBeTypeOf
 import io.mockk.every
 import io.mockk.mockk
 
@@ -25,6 +27,13 @@ class RegionServiceTest : BehaviorSpec({
     } returns true
 
     val aoiRepository = mockk<AOIRepository>()
+    every {
+        aoiRepository.findAllAOIByRegionId(1L)
+    } returns AreaForTest.listOfAOI
+    every {
+        aoiRepository.findAllAOIByRegionId(2L)
+    } returns listOf()
+
     val regionService = RegionService(regionRepository, aoiRepository)
 
     given("CreateNewRegion") {
@@ -47,6 +56,24 @@ class RegionServiceTest : BehaviorSpec({
             val result = regionService.hasRegionId(100L)
             then("you will get false") {
                 result.shouldBeFalse()
+            }
+        }
+    }
+
+    given("readAllAOIInThisRegion") {
+        `when`("If this region contains a num of aois") {
+            val result = regionService.readAllAOIInThisRegion(1L)
+            then("you will get a list of AOIs") {
+                result.size shouldBe 3
+            }
+            then("and this type will be AreaReturnDto"){
+                result[0].shouldBeTypeOf<AreaReturnDto>()
+            }
+        }
+        `when`("If this region contains nothing") {
+            val result = regionService.readAllAOIInThisRegion(2L)
+            then("you will get NOTHING") {
+                result.isEmpty().shouldBeTrue()
             }
         }
     }
