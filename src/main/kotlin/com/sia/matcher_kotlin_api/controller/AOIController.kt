@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 class AOIController(private val aoiService: AOIService) {
 
     @PostMapping
-    fun postAPI(@RequestBody request: AreaSaveRequest) : ResponseEntity<AreaSaveResponse> {
-        val returnAOI: AreaReturnDto = aoiService.createNewRegion(AreaSaveDto(request))
+    fun postAOI(@RequestBody request: AreaSaveRequest) : ResponseEntity<AreaSaveResponse> {
+        val returnAOI: AreaReturnDto = aoiService.createNewAOI(AreaSaveDto(request))
         return ResponseEntity.ok(AreaSaveResponse(returnAOI))
     }
 }

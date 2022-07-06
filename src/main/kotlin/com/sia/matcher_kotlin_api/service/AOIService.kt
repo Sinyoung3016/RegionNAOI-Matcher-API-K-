@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service
 @Service
 class AOIService(private val aoiRepository:AOIRepository) {
 
-    fun createNewRegion(requestDto: AreaSaveDto) : AreaReturnDto{
+    fun createNewAOI(requestDto: AreaSaveDto) : AreaReturnDto{
        return AreaReturnDto(aoiRepository.save(AOI(requestDto)))
     }
 }
