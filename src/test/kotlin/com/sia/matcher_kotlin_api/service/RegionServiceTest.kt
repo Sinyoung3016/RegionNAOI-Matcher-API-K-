@@ -17,6 +17,13 @@ class RegionServiceTest : BehaviorSpec({
     every {
         regionRepository.save(any())
     } returns AreaForTest.region
+    every {
+        regionRepository.existsById(100L)
+    } returns false
+    every {
+        regionRepository.existsById(1L)
+    } returns true
+
     val aoiRepository = mockk<AOIRepository>()
     val regionService = RegionService(regionRepository, aoiRepository)
 
@@ -29,4 +36,18 @@ class RegionServiceTest : BehaviorSpec({
         }
     }
 
+    given("hasRegionId") {
+        `when`("We have Region 1") {
+            val result = regionService.hasRegionId(1L)
+            then("you will get true") {
+                result.shouldBeTrue()
+            }
+        }
+        `when`("We do not have Region 100") {
+            val result = regionService.hasRegionId(100L)
+            then("you will get false") {
+                result.shouldBeFalse()
+            }
+        }
+    }
 })
