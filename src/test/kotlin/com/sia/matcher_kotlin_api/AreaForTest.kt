@@ -15,5 +15,6 @@ class AreaForTest {
         val listOfAOI = listOf(aoi, aoi, aoi)
         val region = Region(areaSaveDto)
         val aoiReturnDto = AreaReturnDto(aoi)
+        val listOfAOIReturnDto = listOf(aoiReturnDto, aoiReturnDto, aoiReturnDto)
     }
 }

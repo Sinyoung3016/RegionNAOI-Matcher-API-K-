@@ -1,6 +1,8 @@
 package com.sia.matcher_kotlin_api.service
 
-import com.sia.matcher_kotlin_api.AreaForTest
+import com.sia.matcher_kotlin_api.AreaForTest.Companion.areaSaveDto
+import com.sia.matcher_kotlin_api.AreaForTest.Companion.listOfAOI
+import com.sia.matcher_kotlin_api.AreaForTest.Companion.region
 import com.sia.matcher_kotlin_api.respository.AOIRepository
 import com.sia.matcher_kotlin_api.respository.RegionRepository
 import com.sia.matcher_kotlin_api.service.dto.AreaReturnDto
@@ -13,12 +15,11 @@ import io.mockk.every
 import io.mockk.mockk
 
 class RegionServiceTest : BehaviorSpec({
-    val areaSaveDto = AreaForTest.areaSaveDto
 
     val regionRepository = mockk<RegionRepository>()
     every {
         regionRepository.save(any())
-    } returns AreaForTest.region
+    } returns region
     every {
         regionRepository.existsById(100L)
     } returns false
@@ -29,7 +30,7 @@ class RegionServiceTest : BehaviorSpec({
     val aoiRepository = mockk<AOIRepository>()
     every {
         aoiRepository.findAllAOIByRegionId(1L)
-    } returns AreaForTest.listOfAOI
+    } returns listOfAOI
     every {
         aoiRepository.findAllAOIByRegionId(2L)
     } returns listOf()

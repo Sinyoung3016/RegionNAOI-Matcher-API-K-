@@ -1,6 +1,7 @@
 package com.sia.matcher_kotlin_api.service;
 
-import com.sia.matcher_kotlin_api.AreaForTest
+import com.sia.matcher_kotlin_api.AreaForTest.Companion.aoi
+import com.sia.matcher_kotlin_api.AreaForTest.Companion.areaSaveDto
 import com.sia.matcher_kotlin_api.respository.AOIRepository
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
@@ -8,12 +9,11 @@ import io.mockk.every
 import io.mockk.mockk
 
 class AOIServiceTest : BehaviorSpec({
-    val areaSaveDto = AreaForTest.areaSaveDto
 
     val aoiRepository = mockk<AOIRepository>()
     every {
         aoiRepository.save(any())
-    } returns AreaForTest.aoi
+    } returns aoi
 
     val aoiService = AOIService(aoiRepository)
 
