@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*
 class RegionController(private val regionService: RegionService) {
 
     @PostMapping
-    fun postRegion(request: AreaSaveRequest): ResponseEntity<AreaSaveResponse>{
+    fun postRegion(@RequestBody request: AreaSaveRequest): ResponseEntity<AreaSaveResponse>{
         val returnRegion: AreaReturnDto = regionService.createNewRegion(AreaSaveDto(request));
         return ResponseEntity.ok(AreaSaveResponse(returnRegion));
     }
