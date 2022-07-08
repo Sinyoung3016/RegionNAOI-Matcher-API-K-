@@ -15,11 +15,11 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class RegionControllerIntergrationTest @Autowired constructor(val mockMvc: MockMvc) {
+class AOIControllerIntegrationTest @Autowired constructor(val mockMvc: MockMvc) {
 
     @Test
-    fun postRegionTest() {
-        val uri = "/regions"
+    fun postAOITest() {
+        val uri = "/aois"
         val body = mapOf("name" to name, "area" to pointsOfMap)
         val content = jacksonObjectMapper().writeValueAsString(body)
 
@@ -30,34 +30,6 @@ class RegionControllerIntergrationTest @Autowired constructor(val mockMvc: MockM
         )
             .andExpect(MockMvcResultMatchers.status().isOk)
             .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1))
-            .andDo(MockMvcResultHandlers.print())
-    }
-
-    @Test
-    fun getAOIListInThisRegionTest_WeHaveAOIS() {
-        val regionId = 5
-        val uri = "/regions/$regionId/aois/intersects"
-
-        mockMvc.perform(
-            MockMvcRequestBuilders.get(uri)
-                .contentType(APPLICATION_JSON)
-        )
-            .andExpect(MockMvcResultMatchers.status().isOk)
-            .andExpect(MockMvcResultMatchers.jsonPath("$.aois.length()").value(7))
-            .andDo(MockMvcResultHandlers.print())
-    }
-
-    @Test
-    fun getAOIListInThisRegionTest_WeDontHaveAOI() {
-        val regionId = 2
-        val uri = "/regions/$regionId/aois/intersects"
-
-        mockMvc.perform(
-            MockMvcRequestBuilders.get(uri)
-                .contentType(APPLICATION_JSON)
-        )
-            .andExpect(MockMvcResultMatchers.status().isOk)
-            .andExpect(MockMvcResultMatchers.jsonPath("$.aois.length()").value(0))
             .andDo(MockMvcResultHandlers.print())
     }
 }
