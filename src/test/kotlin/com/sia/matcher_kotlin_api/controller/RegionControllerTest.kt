@@ -1,8 +1,8 @@
 package com.sia.matcher_kotlin_api.controller;
 
-import com.sia.matcher_kotlin_api.AreaForTest.Companion.aoiReturnDto
-import com.sia.matcher_kotlin_api.AreaForTest.Companion.areaSaveRequest
-import com.sia.matcher_kotlin_api.AreaForTest.Companion.listOfAOIReturnDto
+import com.sia.matcher_kotlin_api.fixture.AreaForTest.aoiReturnDto
+import com.sia.matcher_kotlin_api.fixture.AreaForTest.areaSaveRequest
+import com.sia.matcher_kotlin_api.fixture.AreaForTest.listOfAOIReturnDto
 import com.sia.matcher_kotlin_api.controller.dto.response.AreaListReturnResponse
 import com.sia.matcher_kotlin_api.service.RegionService
 import io.kotest.assertions.throwables.shouldThrow

@@ -1,8 +1,8 @@
 package com.sia.matcher_kotlin_api.service
 
-import com.sia.matcher_kotlin_api.AreaForTest.Companion.areaSaveDto
-import com.sia.matcher_kotlin_api.AreaForTest.Companion.listOfAOI
-import com.sia.matcher_kotlin_api.AreaForTest.Companion.region
+import com.sia.matcher_kotlin_api.fixture.AreaForTest.areaSaveDto
+import com.sia.matcher_kotlin_api.fixture.AreaForTest.listOfAOI
+import com.sia.matcher_kotlin_api.fixture.AreaForTest.region
 import com.sia.matcher_kotlin_api.respository.AOIRepository
 import com.sia.matcher_kotlin_api.respository.RegionRepository
 import com.sia.matcher_kotlin_api.service.dto.AreaReturnDto

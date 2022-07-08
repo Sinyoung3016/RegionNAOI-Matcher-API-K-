@@ -1,8 +1,8 @@
 package com.sia.matcher_kotlin_api.controller
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import com.sia.matcher_kotlin_api.AreaForTest.Companion.name
-import com.sia.matcher_kotlin_api.AreaForTest.Companion.pointsOfMap
+import com.sia.matcher_kotlin_api.fixture.AreaForTest.name
+import com.sia.matcher_kotlin_api.fixture.AreaForTest.pointsOfMap
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc

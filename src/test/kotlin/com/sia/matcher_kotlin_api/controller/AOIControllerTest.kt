@@ -1,7 +1,7 @@
 package com.sia.matcher_kotlin_api.controller
 
-import com.sia.matcher_kotlin_api.AreaForTest.Companion.aoiReturnDto
-import com.sia.matcher_kotlin_api.AreaForTest.Companion.areaSaveRequest
+import com.sia.matcher_kotlin_api.fixture.AreaForTest.aoiReturnDto
+import com.sia.matcher_kotlin_api.fixture.AreaForTest.areaSaveRequest
 import com.sia.matcher_kotlin_api.service.AOIService
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
