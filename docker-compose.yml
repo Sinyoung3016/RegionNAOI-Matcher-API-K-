@@ -1,0 +1,27 @@
+version : "3" #docker-compose의 버전
+services:
+  db: #db 컨테이너
+    container_name: matcher-db #컨테이너 이름 설정
+    image: postgis/postgis #docker hub에 있는 image 리스트에서 사용할 이미지명과 태그
+    environment: #환경 -> 해당 DB가 요구하는대로 작성
+      POSTGRES_DB : matcher
+      POSTGRES_USER : user
+      POSTGRES_PASSWORD : user
+    ports : #외부 접속 포트를 내부 포트와 연결
+      - "5432:5432"
+    restart: always
+  app: #app 컨테이너
+    build: #이미 만들어 둔 Dockerfile을 빌드
+      context: "."
+      dockerfile: "Dockerfile"
+    container_name: matcher-app
+    ports:
+      - "8080:8080"
+    working_dir: /app
+    depends_on: #컨테이너 실행 우선순위 지정 : 하위로 기입한 컨테이너가 실행된 후 현재 컨테이너가 실행됨
+      - db
+    restart: always
+    environment:
+      SPRING_DATASOURCE_USERNAME: user
+      SPRING_DATASOURCE_PASSWORD: user
+      SPRING_DATASOURCE_URL: jdbc:postgresql://matcher-db:5432/matcher #localhost의 자리에 db container 이름을 넣어줘요 = 해당 db와 연결되도록
