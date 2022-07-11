@@ -12,10 +12,21 @@ import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
+import org.testcontainers.containers.PostgreSQLContainer
+import org.testcontainers.junit.jupiter.Container
+import org.testcontainers.junit.jupiter.Testcontainers
+import org.testcontainers.utility.DockerImageName
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@Testcontainers
 class AOIControllerIntegrationTest @Autowired constructor(val mockMvc: MockMvc) {
+
+    @Container
+    private val postgresqlContainer = PostgreSQLContainer<Nothing>(
+        DockerImageName.parse("postgis/postgis")
+            .asCompatibleSubstituteFor("postgres")
+    )
 
     @Test
     fun postAOITest() {
