@@ -1,7 +1,7 @@
 package com.sia.matcher_kotlin_api.controller;
 
-import com.sia.matcher_kotlin_api.fixture.AreaForTest.aoiReturnDto
-import com.sia.matcher_kotlin_api.fixture.AreaForTest.areaSaveRequest
+import com.sia.matcher_kotlin_api.fixture.RegionForTest.regionReturnDto
+import com.sia.matcher_kotlin_api.fixture.RegionForTest.regionSaveRequest
 import com.sia.matcher_kotlin_api.fixture.AreaForTest.listOfAOIReturnDto
 import com.sia.matcher_kotlin_api.controller.dto.response.AreaListReturnResponse
 import com.sia.matcher_kotlin_api.service.RegionService
@@ -20,11 +20,11 @@ class RegionControllerTest : BehaviorSpec({
         val regionService = mockk<RegionService>()
         every {
             regionService.createNewRegion(any())
-        } returns aoiReturnDto
+        } returns regionReturnDto
         val regionController = RegionController(regionService)
 
         `when`("If you request to Save new Region") {
-            val result = regionController.postRegion(areaSaveRequest)
+            val result = regionController.postRegion(regionSaveRequest)
             then("you can get new Region's id") {
                 result.body!!.id shouldBe 0L
             }
@@ -72,7 +72,7 @@ class RegionControllerTest : BehaviorSpec({
                 result.statusCode.is2xxSuccessful
             }
             then("data check") {
-                result.body!!.aois[0].name shouldBe areaSaveRequest.name
+                result.body!!.aois[0].name shouldBe regionSaveRequest.name
             }
             then("verify") {
                 verify(exactly = 1) { regionService.hasRegionId(regionIdWithAOIS) }

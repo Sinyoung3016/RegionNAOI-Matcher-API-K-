@@ -1,7 +1,7 @@
 package com.sia.matcher_kotlin_api.service;
 
 import com.sia.matcher_kotlin_api.fixture.AreaForTest.aoi
-import com.sia.matcher_kotlin_api.fixture.AreaForTest.areaSaveDto
+import com.sia.matcher_kotlin_api.fixture.AreaForTest.aoiSaveDto
 import com.sia.matcher_kotlin_api.respository.AOIRepository
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
@@ -19,9 +19,9 @@ class AOIServiceTest : BehaviorSpec({
         val aoiService = AOIService(aoiRepository)
 
         `when`("If you add a new AOI") {
-            val result = aoiService.createNewAOI(areaSaveDto)
+            val result = aoiService.createNewAOI(aoiSaveDto)
             then("you can get this AOI in AOIRepository") {
-                result.name shouldBe areaSaveDto.name
+                result.name shouldBe aoiSaveDto.name
             }
             then("verify") {
                 verify(exactly = 1) { aoiRepository.save(any()) }

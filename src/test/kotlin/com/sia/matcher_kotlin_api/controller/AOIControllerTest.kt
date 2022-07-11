@@ -1,7 +1,7 @@
 package com.sia.matcher_kotlin_api.controller
 
 import com.sia.matcher_kotlin_api.fixture.AreaForTest.aoiReturnDto
-import com.sia.matcher_kotlin_api.fixture.AreaForTest.areaSaveRequest
+import com.sia.matcher_kotlin_api.fixture.AreaForTest.aoiSaveRequest
 import com.sia.matcher_kotlin_api.service.AOIService
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
@@ -19,7 +19,7 @@ class AOIControllerTest : BehaviorSpec({
 
         val aoiController = AOIController(aoiService)
         `when`("If you request to Save new AOI") {
-            val result = aoiController.postAOI(areaSaveRequest)
+            val result = aoiController.postAOI(aoiSaveRequest)
             then("you can get new AOI's id") {
                 result.body!!.id shouldBe 0L
             }

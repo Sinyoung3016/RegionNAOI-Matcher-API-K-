@@ -1,8 +1,8 @@
 package com.sia.matcher_kotlin_api.service
 
-import com.sia.matcher_kotlin_api.fixture.AreaForTest.areaSaveDto
+import com.sia.matcher_kotlin_api.fixture.RegionForTest.regionSaveDto
 import com.sia.matcher_kotlin_api.fixture.AreaForTest.listOfAOI
-import com.sia.matcher_kotlin_api.fixture.AreaForTest.region
+import com.sia.matcher_kotlin_api.fixture.RegionForTest.region
 import com.sia.matcher_kotlin_api.respository.AOIRepository
 import com.sia.matcher_kotlin_api.respository.RegionRepository
 import com.sia.matcher_kotlin_api.service.dto.AreaReturnDto
@@ -26,9 +26,9 @@ class RegionServiceTest : BehaviorSpec({
         val regionService = RegionService(regionRepository, aoiRepository)
 
         `when`("If you add a new Region") {
-            val result = regionService.createNewRegion(areaSaveDto)
+            val result = regionService.createNewRegion(regionSaveDto)
             then("you can get this AOI in AOIRepository") {
-                result.name shouldBe areaSaveDto.name
+                result.name shouldBe regionSaveDto.name
             }
             then("verify") {
                 verify(exactly = 1) { regionRepository.save(any()) }
@@ -93,7 +93,7 @@ class RegionServiceTest : BehaviorSpec({
                 result[0].shouldBeTypeOf<AreaReturnDto>()
             }
             then("data check") {
-                result[0].name shouldBe areaSaveDto.name
+                result[0].name shouldBe regionSaveDto.name
             }
             then("verify") {
                 verify(exactly = 1) { aoiRepository.findAllAOIByRegionId(regionIdWithAOIS) }
