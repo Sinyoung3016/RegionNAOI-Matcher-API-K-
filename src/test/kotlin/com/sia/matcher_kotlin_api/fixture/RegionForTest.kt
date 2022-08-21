@@ -7,20 +7,21 @@ import com.sia.matcher_kotlin_api.service.dto.AreaReturnDto
 import com.sia.matcher_kotlin_api.service.dto.AreaSaveDto
 
 object RegionForTest {
-    val name = "test"
-    val points = listOf(Point(0.0, 0.0), Point(0.0, 2.0), Point(2.0, 2.0), Point(2.0, 0.0))
-    val pointsOfMap = listOf(
+    val pointsOfMap_haveAOIs = listOf(
         mapOf("x" to 0, "y" to 0),
         mapOf("x" to 2, "y" to 0),
         mapOf("x" to 2, "y" to 2),
         mapOf("x" to 0, "y" to 2)
     )
-    val pointsOfMap02 = listOf(
+    val pointsOfMap_dontHaveAOIs = listOf(
         mapOf("x" to 8, "y" to 8),
         mapOf("x" to 9, "y" to 8),
         mapOf("x" to 10, "y" to 10),
         mapOf("x" to 8, "y" to 10)
     )
+
+    val name = "test"
+    val points = listOf(Point(0.0, 0.0), Point(0.0, 2.0), Point(2.0, 2.0), Point(2.0, 0.0))
     val regionSaveRequest = AreaSaveRequest(name, points)
     val regionSaveDto = AreaSaveDto(regionSaveRequest)
     val region = Region(regionSaveDto)
